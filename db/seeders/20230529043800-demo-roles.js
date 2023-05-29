@@ -23,6 +23,18 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          id: 4,
+          name: "RETAILER",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: 5,
+          name: "BUYER",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );
