@@ -4,7 +4,6 @@ const morgan = require("morgan");
 const router = require("./routes");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
 const { PORT } = process.env;
 
 const app = express();
@@ -12,6 +11,7 @@ const app = express();
 const notFoundMiddleware = require("./middlewares/not-found");
 const handleErrorMiddlware = require("./middlewares/handle-error");
 
+app.set("view engine", "ejs");
 app.use(morgan("dev"));
 app.use(express.json()); // read body type json
 app.use(bodyParser.urlencoded({ extended: false }));
