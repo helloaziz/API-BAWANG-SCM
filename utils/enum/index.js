@@ -6,4 +6,14 @@ const ROLES = {
   BUYER: "BUYER",
 };
 
-module.exports = { ROLES };
+const DELETED = {
+  YES: "YES",
+  NO: "NO",
+};
+
+const PRODUCT_STATUS = {
+  ACTIVE: "ACTIVE",
+  INACTIVE: "INACTIVE",
+};
+
+module.exports = { ROLES, DELETED, PRODUCT_STATUS };
