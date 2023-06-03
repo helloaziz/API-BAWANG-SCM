@@ -60,4 +60,17 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { login };
+const whoami = async (req, res, next) => {
+  try {
+    const user = req.user;
+    return res.status(StatusCodes.OK).json({
+      status: true,
+      message: "Success",
+      data: user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { login, whoami };
