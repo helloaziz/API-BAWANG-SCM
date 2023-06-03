@@ -1,5 +1,5 @@
-const { User } = require("../models");
-const { BadRequestError } = require("../errors");
+const { User } = require("../../models");
+const { BadRequestError } = require("../../errors");
 const bcrypt = require("bcrypt");
 const Validator = require("fastest-validator");
 const v = new Validator();
