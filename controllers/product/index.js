@@ -157,6 +157,31 @@ const index = async (req, res, next) => {
   }
 };
 
+const show = async (req, res, next) => {
+  try {
+    const { product_id } = req.params;
+
+    const result = await Product.findOne({
+      where: {
+        id: product_id,
+        deleted: DELETED.NO,
+      },
+      include: [{ model: User, as: "user" }],
+    });
+
+    if (!result) {
+      throw new NotFoundError(`Product tidak ada!`);
+    }
+
+    return res.status(StatusCodes.OK).json({
+      status: true,
+      message: "Success Get Product!",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 const showBuyerRetail = async (req, res, next) => {
   try {
     const { product_id } = req.params;
@@ -167,6 +192,7 @@ const showBuyerRetail = async (req, res, next) => {
         deleted: DELETED.NO,
         status: PRODUCT_STATUS.ACTIVE,
       },
+      include: [{ model: User, as: "user" }],
     });
 
     if (!result) {
@@ -266,4 +292,5 @@ module.exports = {
   showBuyerRetail,
   destroy,
   status,
+  show,
 };
