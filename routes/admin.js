@@ -4,5 +4,6 @@ const authorize = require("../middlewares/authorize");
 const { ROLES } = require("../utils/enum");
 
 router.post("/register-patner", authorize(ROLES.ADMIN), admin.registerPatner);
+router.post("/register-admin", admin.registerAdmin);
 
 module.exports = router;
