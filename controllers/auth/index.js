@@ -1,6 +1,8 @@
 const { User, Role } = require("../../models");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../../errors");
+const jwt = require("jsonwebtoken");
+const { JWT_SECRET_KEY } = process.env;
 const bcrypt = require("bcrypt");
 const Validator = require("fastest-validator");
 const { ROLES } = require("../../utils/enum");
@@ -117,14 +119,14 @@ const login = async (req, res, next) => {
     const payload = {
       id: user.id,
       email: user.email,
-      role: user.role.role,
+      role: user.role.name,
     };
 
     const token = jwt.sign(payload, JWT_SECRET_KEY);
 
     return res.status(StatusCodes.OK).json({
       status: true,
-      message: "Success create addresss!",
+      message: "Success login!",
       data: {
         email: email,
         token: token,
