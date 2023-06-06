@@ -36,6 +36,24 @@ const registerPatner = async (req, res, next) => {
       );
     }
 
+    const phoneSchema = {
+      phone_number: {
+        type: "string",
+        pattern: /^0\d{9,12}$/,
+        max: 13,
+      },
+    };
+
+    const checkPhone = await v.compile(phoneSchema);
+
+    const validatePhone = checkPhone({
+      phone_number: `${phone_number}`,
+    });
+
+    if (validatePhone.length > 0) {
+      throw new BadRequestError("Format nomor telepon salah!");
+    }
+
     const userExist = await User.findOne({
       where: {
         [Op.or]: [{ email }, { phone_number }],
