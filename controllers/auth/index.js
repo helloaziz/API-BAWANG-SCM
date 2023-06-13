@@ -227,6 +227,7 @@ const login = async (req, res, next) => {
       phone_number: user.phone_number,
       email: user.email,
       role: user.role.name,
+      status: user.status,
     };
 
     const token = jwt.sign(payload, JWT_SECRET_KEY);
