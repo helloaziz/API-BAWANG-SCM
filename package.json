@@ -27,6 +27,8 @@
     "pg": "^8.10.0",
     "pg-hstore": "^2.3.4",
     "request": "^2.88.2",
-    "sequelize": "^6.30.0"
+    "sequelize": "^6.30.0",
+    "swagger-ui-express": "^4.6.3",
+    "yamljs": "^0.3.0"
   }
 }
