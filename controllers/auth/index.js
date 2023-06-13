@@ -216,6 +216,10 @@ const login = async (req, res, next) => {
       throw new NotFoundError("Invalid credentials!");
     }
 
+    if (user.status === EMAIL_STATUS.INACTIVE) {
+      throw new BadRequestError("Email tidak aktif!");
+    }
+
     const match = await bcrypt.compare(password, user.password);
 
     if (!match) {
@@ -225,6 +229,8 @@ const login = async (req, res, next) => {
     const payload = {
       id: user.id,
       phone_number: user.phone_number,
+      first_name: user.first_name,
+      last_name: user.last_name,
       email: user.email,
       role: user.role.name,
       status: user.status,
@@ -236,7 +242,6 @@ const login = async (req, res, next) => {
       status: true,
       message: "Success login!",
       data: {
-        email: email,
         token: token,
       },
     });
@@ -374,7 +379,6 @@ const changePassword = async (req, res, next) => {
       return res.status(StatusCodes.OK).json({
         status: false,
         message: "Password minimal 6 karakter!",
-        data: null,
       });
     }
 
@@ -384,7 +388,6 @@ const changePassword = async (req, res, next) => {
       return res.status(StatusCodes.BAD_REQUEST).json({
         status: false,
         message: "Password Doesn't Match",
-        data: null,
       });
     }
     const correct = await bcrypt.compare(oldPassword, existUser.password);
@@ -392,7 +395,6 @@ const changePassword = async (req, res, next) => {
       return res.status(StatusCodes.BAD_REQUEST).json({
         status: false,
         message: "Old Password Doesn't Match!",
-        data: null,
       });
     }
 
@@ -405,7 +407,6 @@ const changePassword = async (req, res, next) => {
       return res.status(StatusCodes.BAD_REQUEST).json({
         status: false,
         message: "Something Went Wrong",
-        data: null,
       });
     }
 
@@ -425,6 +426,10 @@ const activateAccount = async (req, res, next) => {
     const { otp } = req.body;
 
     const checkUser = await User.findOne({ where: { email: user.email } });
+
+    if (checkUser.status === EMAIL_STATUS.ACTIVE) {
+      throw new BadRequestError("Email sudah aktif!");
+    }
 
     if (otp !== checkUser.otp) {
       throw new BadRequestError("OTP salah!");
@@ -448,8 +453,11 @@ const activateAccount = async (req, res, next) => {
     const payload = {
       id: getNewUser.id,
       phone_number: getNewUser.phone_number,
+      first_name: getNewUser.first_name,
+      last_name_name: getNewUser.last_name_name,
       email: getNewUser.email,
       role: getNewUser.role.name,
+      status: getNewUser.status,
     };
 
     const token = jwt.sign(payload, JWT_SECRET_KEY);
