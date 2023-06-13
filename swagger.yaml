@@ -1,0 +1,1531 @@
+openapi: 3.0.0
+x-stoplight:
+  id: ahrw3elvsvv5q
+info:
+  title: API Bawang
+  version: "1.0"
+servers:
+  - url: "http://localhost:3000"
+paths:
+  /auth/register:
+    parameters: []
+    post:
+      summary: Register User
+      operationId: post-auth-register
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      email:
+                        type: string
+                      role_id:
+                        type: integer
+                      token:
+                        type: string
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success create user!
+                    data:
+                      first_name: Otniel
+                      last_name: Kevin
+                      email: otnielkevin.ok@gmail.com
+                      role_id: 4
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90bmllbGtldmluLm9rQGdtYWlsLmNvbSIsIm90cCI6IjU5MzciLCJyb2xlX2lkIjo0LCJzdGF0dXMiOiJJTkFDVElWRSIsImlhdCI6MTY4NjYzMzg3NH0.WRobYLDcTJELo-I9u1Py9uGdIGOQ_o-cKQNK3LzlgjI
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success create user!
+                    data:
+                      first_name: Otniel
+                      last_name: Kevin
+                      email: otnielkevin.ok@gmail.com
+                      role_id: 4
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90bmllbGtldmluLm9rQGdtYWlsLmNvbSIsIm90cCI6IjU5MzciLCJyb2xlX2lkIjo0LCJzdGF0dXMiOiJJTkFDVElWRSIsImlhdCI6MTY4NjYzMzg3NH0.WRobYLDcTJELo-I9u1Py9uGdIGOQ_o-cKQNK3LzlgjI
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    message: Email/Nomer telepon sudah terdaftar!
+              examples:
+                Example 1:
+                  value:
+                    message: Email/Nomer telepon sudah terdaftar!
+      tags:
+        - Auth
+      description: "Register User (Pengepul & Retailer only!)  "
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  role_id: 4
+                  first_name: Otniel
+                  last_name: Kevin
+                  email: otnielkevin.ok@gmail.com
+                  password: qwerty123
+                  confirm_password: qwerty123
+                  phone_number: "085329447623"
+              properties:
+                role_id:
+                  type: integer
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                confirm_password:
+                  type: string
+                phone_number:
+                  type: string
+              required:
+                - role_id
+                - first_name
+                - last_name
+                - email
+                - password
+                - confirm_password
+                - phone_number
+            examples:
+              Example 1:
+                value:
+                  role_id: 4
+                  first_name: Otniel
+                  last_name: Kevin
+                  email: otnielkevin.ok@gmail.com
+                  password: qwerty123
+                  confirm_password: qwerty123
+                  phone_number: "085329447621"
+  /auth/login:
+    parameters: []
+    post:
+      summary: Login User
+      operationId: post-auth-login
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success login!
+                    data:
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGhvbmVfbnVtYmVyIjoiMDg1MzI5NDQ3NjIxIiwiZW1haWwiOiJub3JlcGx5YmF3YW5nQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsInN0YXR1cyI6IkFDVElWRSIsImlhdCI6MTY4NjY0MzIyMX0.graheL3WFbPaJ7CkrrIOP0gibj_aFGXLqJ2MQ5s_7Gc
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success login!
+                    data:
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGhvbmVfbnVtYmVyIjoiMDg1MzI5NDQ3NjIxIiwiZW1haWwiOiJub3JlcGx5YmF3YW5nQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsInN0YXR1cyI6IkFDVElWRSIsImlhdCI6MTY4NjY0MzIyMX0.graheL3WFbPaJ7CkrrIOP0gibj_aFGXLqJ2MQ5s_7Gc
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    message: Invalid credentials!
+              examples:
+                Example 1:
+                  value:
+                    message: Invalid credentials!
+      description: Login User by Mobile & Email
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  phone_number: "085329447626"
+                  password: qwerty123
+              properties:
+                phone_number:
+                  type: string
+                password:
+                  type: string
+              required:
+                - phone_number
+                - password
+            examples:
+              "Example 1 : Mobile login":
+                value:
+                  phone_number: "085329447621"
+                  password: qwerty123
+              "Example 2 : Email Login":
+                value:
+                  email: otnielkevin.ok@gmail.com
+                  password: rahasia123
+      tags:
+        - Auth
+  /auth/forgotPassword:
+    parameters: []
+    post:
+      summary: Forgot Password User
+      operationId: post-auth-forgot-password
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: string
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Harap cek email untuk reset password!
+                    data: otnielkevin.ok@gmail.com
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Harap cek email untuk reset password!
+                    data: otnielkevin.ok@gmail.com
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    status: false
+                    message: Email tidak ditemukan!
+              examples:
+                Example 1:
+                  value:
+                    status: false
+                    message: Email tidak ditemukan!
+      description: Forgot Password User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  email: otnielkevin.ok@gmail.com
+              properties:
+                email:
+                  type: string
+              required:
+                - email
+            examples:
+              Example 1:
+                value:
+                  email: otnielkevin.ok@gmail.com
+      tags:
+        - Auth
+  /auth/resetPassword:
+    parameters: []
+    put:
+      summary: Reset Password User
+      operationId: put-auth-resetPassword
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      email:
+                        type: string
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: success change password
+                    data:
+                      id: 7
+                      email: otnielkevin.ok@gmail.com
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: success change password
+                    data:
+                      id: 7
+                      email: otnielkevin.ok@gmail.com
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    status: false
+                    message: Password not match!
+              examples:
+                Example 1:
+                  value:
+                    status: false
+                    message: Password not match!
+      description: Reset Password User
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: token
+          required: true
+          description: Get Token From Email
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  newPass: rahasia123
+                  confirmNewPass: rahasia123
+              properties:
+                newPass:
+                  type: string
+                confirmNewPass:
+                  type: string
+              required:
+                - newPass
+                - confirmNewPass
+            examples:
+              Example 1:
+                value:
+                  newPass: rahasia123
+                  confirmNewPass: rahasia123
+      tags:
+        - Auth
+  /auth/activateAccount:
+    parameters: []
+    put:
+      summary: Activate Account
+      operationId: put-auth-activateAccount
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success!
+                    data:
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwicGhvbmVfbnVtYmVyIjoiMDg1MzI5NDQ3NjIzIiwiZW1haWwiOiJvdG5pZWxrZXZpbi5va0BnbWFpbC5jb20iLCJyb2xlIjoiUkVUQUlMRVIiLCJpYXQiOjE2ODY2NDQyMTR9.d_febMTjwZB5R07PPX9Jh6gl6uUa4Fj9Ko9shIx8qIc
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success!
+                    data:
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwicGhvbmVfbnVtYmVyIjoiMDg1MzI5NDQ3NjIzIiwiZW1haWwiOiJvdG5pZWxrZXZpbi5va0BnbWFpbC5jb20iLCJyb2xlIjoiUkVUQUlMRVIiLCJpYXQiOjE2ODY2NDQyMTR9.d_febMTjwZB5R07PPX9Jh6gl6uUa4Fj9Ko9shIx8qIc
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    message: OTP salah!
+              examples:
+                "Example 1: Wrong OTP":
+                  value:
+                    message: OTP salah!
+                "Example 2: Account Activated":
+                  value:
+                    message: Email sudah aktif!
+        "":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success!
+                    data:
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwicGhvbmVfbnVtYmVyIjoiMDg1MzI5NDQ3NjIzIiwiZW1haWwiOiJvdG5pZWxrZXZpbi5va0BnbWFpbC5jb20iLCJyb2xlIjoiUkVUQUlMRVIiLCJpYXQiOjE2ODY2MzM5MTZ9.-qTGTZk4nf0E-ttFxpWtbah8J72KPRhqyHb5sPYto8U
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success!
+                    data:
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwicGhvbmVfbnVtYmVyIjoiMDg1MzI5NDQ3NjIzIiwiZW1haWwiOiJvdG5pZWxrZXZpbi5va0BnbWFpbC5jb20iLCJyb2xlIjoiUkVUQUlMRVIiLCJpYXQiOjE2ODY2MzM5MTZ9.-qTGTZk4nf0E-ttFxpWtbah8J72KPRhqyHb5sPYto8U
+      description: Activate account by OTP
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  otp: "5937"
+              properties:
+                otp:
+                  type: string
+              required:
+                - otp
+            examples:
+              Example 1:
+                value:
+                  otp: "5937"
+        description: Enter OTP for account activation!
+      security:
+        - bearerAuth: []
+      tags:
+        - Auth
+  /auth/changePassword:
+    parameters: []
+    put:
+      summary: Change Password User
+      operationId: put-auth-changePassword
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: integer
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Password Updated!
+                    data:
+                      - 1
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Password Updated!
+                    data:
+                      - 1
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    status: false
+                    message: Password Doesn't Match
+              examples:
+                "Example 1: Password doesn't match":
+                  value:
+                    status: false
+                    message: Password Doesn't Match
+                "Example 2: Wrong Old Password":
+                  value:
+                    status: false
+                    message: Old Password Doesn't Match!
+        "":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success!
+                    data:
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwicGhvbmVfbnVtYmVyIjoiMDg1MzI5NDQ3NjIzIiwiZW1haWwiOiJvdG5pZWxrZXZpbi5va0BnbWFpbC5jb20iLCJyb2xlIjoiUkVUQUlMRVIiLCJpYXQiOjE2ODY2MzM5MTZ9.-qTGTZk4nf0E-ttFxpWtbah8J72KPRhqyHb5sPYto8U
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success!
+                    data:
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwicGhvbmVfbnVtYmVyIjoiMDg1MzI5NDQ3NjIzIiwiZW1haWwiOiJvdG5pZWxrZXZpbi5va0BnbWFpbC5jb20iLCJyb2xlIjoiUkVUQUlMRVIiLCJpYXQiOjE2ODY2MzM5MTZ9.-qTGTZk4nf0E-ttFxpWtbah8J72KPRhqyHb5sPYto8U
+      description: Change Password User
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  oldPassword: qwerty123
+                  newPassword: rahasia123
+                  confirmNewPassword: rahasia123
+              properties:
+                oldPassword:
+                  type: string
+                newPassword:
+                  type: string
+                confirmNewPassword:
+                  type: string
+              required:
+                - oldPassword
+                - newPassword
+                - confirmNewPassword
+            examples:
+              Example 1:
+                value:
+                  oldPassword: qwerty123
+                  newPassword: rahasia123
+                  confirmNewPassword: rahasia123
+        description: "Change Password "
+      security:
+        - bearerAuth: []
+      tags:
+        - Auth
+  /auth/whoami:
+    parameters: []
+    get:
+      summary: Who Am I
+      operationId: get-auth-whoami
+      responses:
+        "200":
+          description: OK
+        "":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      phone_number:
+                        type: string
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      email:
+                        type: string
+                      role:
+                        type: string
+                      status:
+                        type: string
+                      iat:
+                        type: integer
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success
+                    data:
+                      id: 7
+                      phone_number: "085329447627"
+                      first_name: Otniel
+                      last_name: Kevin
+                      email: rarjen57@gmail.com
+                      role: RETAILER
+                      status: ACTIVE
+                      iat: 1686650624
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success
+                    data:
+                      id: 7
+                      phone_number: "085329447627"
+                      first_name: Otniel
+                      last_name: Kevin
+                      email: rarjen57@gmail.com
+                      role: RETAILER
+                      status: ACTIVE
+                      iat: 1686650624
+      description: Get user login by token
+      tags:
+        - Auth
+  /admin/userIndex:
+    get:
+      summary: Get All USers
+      tags:
+        - Admin
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        wallet_address:
+                          type:
+                            - "null"
+                            - string
+                        first_name:
+                          type: string
+                        last_name:
+                          type: string
+                        email:
+                          type: string
+                        location:
+                          type:
+                            - "null"
+                            - string
+                        address:
+                          type:
+                            - "null"
+                            - string
+                        phone_number:
+                          type: string
+                        password:
+                          type: string
+                        role_id:
+                          type: integer
+                        otp:
+                          type: string
+                        status:
+                          type: string
+                        createdAt:
+                          type: string
+                        updatedAt:
+                          type: string
+                        role:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            createdAt:
+                              type: string
+                            updatedAt:
+                              type: string
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success get users
+                    data:
+                      - id: 1
+                        wallet_address: "-"
+                        first_name: Admin
+                        last_name: Bawang
+                        email: noreplybawang@gmail.com
+                        location: Semarang
+                        address: "Semarang, Indonesia"
+                        phone_number: "085329447621"
+                        password: $2b$10$S1xL6dSEnajXtbAHh97p9uao9ZqJ2YZlR1tZDmJOefbBYbyGQHSOW
+                        role_id: 1
+                        otp: "-"
+                        status: ACTIVE
+                        createdAt: "2023-06-13T01:38:22.928Z"
+                        updatedAt: "2023-06-13T01:38:22.928Z"
+                        role:
+                          id: 1
+                          name: ADMIN
+                          createdAt: "2023-06-13T01:38:22.810Z"
+                          updatedAt: "2023-06-13T01:38:22.810Z"
+                      - id: 8
+                        wallet_address: null
+                        first_name: Otniel
+                        last_name: Kevin
+                        email: otnielkevin.ok@gmail.com
+                        location: null
+                        address: null
+                        phone_number: "085329447623"
+                        password: $2b$10$zRTC5i5OA1nT1SPelK4Q3OfbgvnX1cPSMZE7zKBxKYOYNQDSaJnmu
+                        role_id: 4
+                        otp: "5937"
+                        status: ACTIVE
+                        createdAt: "2023-06-13T05:24:34.245Z"
+                        updatedAt: "2023-06-13T08:29:15.162Z"
+                        role:
+                          id: 4
+                          name: RETAILER
+                          createdAt: "2023-06-13T01:38:22.810Z"
+                          updatedAt: "2023-06-13T01:38:22.810Z"
+                      - id: 7
+                        wallet_address: null
+                        first_name: Otniel
+                        last_name: Kevin
+                        email: rarjen57@gmail.com
+                        location: null
+                        address: null
+                        phone_number: "085329447627"
+                        password: $2b$10$HtaZs6KsfaQmiPwaAxsxIeN6j1WX3w10SQAaH3s2M5t9TrdvZryOm
+                        role_id: 4
+                        otp: "0900"
+                        status: ACTIVE
+                        createdAt: "2023-06-13T05:09:09.684Z"
+                        updatedAt: "2023-06-13T05:09:57.793Z"
+                        role:
+                          id: 4
+                          name: RETAILER
+                          createdAt: "2023-06-13T01:38:22.810Z"
+                          updatedAt: "2023-06-13T01:38:22.810Z"
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success get users
+                    data:
+                      - id: 1
+                        wallet_address: "-"
+                        first_name: Admin
+                        last_name: Bawang
+                        email: noreplybawang@gmail.com
+                        location: Semarang
+                        address: "Semarang, Indonesia"
+                        phone_number: "085329447621"
+                        password: $2b$10$S1xL6dSEnajXtbAHh97p9uao9ZqJ2YZlR1tZDmJOefbBYbyGQHSOW
+                        role_id: 1
+                        otp: "-"
+                        status: ACTIVE
+                        createdAt: "2023-06-13T01:38:22.928Z"
+                        updatedAt: "2023-06-13T01:38:22.928Z"
+                        role:
+                          id: 1
+                          name: ADMIN
+                          createdAt: "2023-06-13T01:38:22.810Z"
+                          updatedAt: "2023-06-13T01:38:22.810Z"
+                      - id: 8
+                        wallet_address: null
+                        first_name: Otniel
+                        last_name: Kevin
+                        email: otnielkevin.ok@gmail.com
+                        location: null
+                        address: null
+                        phone_number: "085329447623"
+                        password: $2b$10$zRTC5i5OA1nT1SPelK4Q3OfbgvnX1cPSMZE7zKBxKYOYNQDSaJnmu
+                        role_id: 4
+                        otp: "5937"
+                        status: ACTIVE
+                        createdAt: "2023-06-13T05:24:34.245Z"
+                        updatedAt: "2023-06-13T08:29:15.162Z"
+                        role:
+                          id: 4
+                          name: RETAILER
+                          createdAt: "2023-06-13T01:38:22.810Z"
+                          updatedAt: "2023-06-13T01:38:22.810Z"
+                      - id: 7
+                        wallet_address: null
+                        first_name: Otniel
+                        last_name: Kevin
+                        email: rarjen57@gmail.com
+                        location: null
+                        address: null
+                        phone_number: "085329447627"
+                        password: $2b$10$HtaZs6KsfaQmiPwaAxsxIeN6j1WX3w10SQAaH3s2M5t9TrdvZryOm
+                        role_id: 4
+                        otp: "0900"
+                        status: ACTIVE
+                        createdAt: "2023-06-13T05:09:09.684Z"
+                        updatedAt: "2023-06-13T05:09:57.793Z"
+                        role:
+                          id: 4
+                          name: RETAILER
+                          createdAt: "2023-06-13T01:38:22.810Z"
+                          updatedAt: "2023-06-13T01:38:22.810Z"
+      operationId: get-admin-userIndex
+      security:
+        - bearerAuth: []
+      description: Get all users by admin
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: email
+          description: Search email
+        - schema:
+            type: string
+          in: query
+          name: phone_number
+          description: Search phone number
+  "/admin/userShow/{user_id}":
+    get:
+      summary: Get User
+      tags:
+        - Admin
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      wallet_address:
+                        type: "null"
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      email:
+                        type: string
+                      location:
+                        type: "null"
+                      address:
+                        type: "null"
+                      phone_number:
+                        type: string
+                      password:
+                        type: string
+                      role_id:
+                        type: integer
+                      otp:
+                        type: string
+                      status:
+                        type: string
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                      role:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                          createdAt:
+                            type: string
+                          updatedAt:
+                            type: string
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success get user
+                    data:
+                      id: 8
+                      wallet_address: null
+                      first_name: Otniel
+                      last_name: Kevin
+                      email: otnielkevin.ok@gmail.com
+                      location: null
+                      address: null
+                      phone_number: "085329447623"
+                      password: $2b$10$zRTC5i5OA1nT1SPelK4Q3OfbgvnX1cPSMZE7zKBxKYOYNQDSaJnmu
+                      role_id: 4
+                      otp: "5937"
+                      status: ACTIVE
+                      createdAt: "2023-06-13T05:24:34.245Z"
+                      updatedAt: "2023-06-13T08:29:15.162Z"
+                      role:
+                        id: 4
+                        name: RETAILER
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success get user
+                    data:
+                      id: 8
+                      wallet_address: null
+                      first_name: Otniel
+                      last_name: Kevin
+                      email: otnielkevin.ok@gmail.com
+                      location: null
+                      address: null
+                      phone_number: "085329447623"
+                      password: $2b$10$zRTC5i5OA1nT1SPelK4Q3OfbgvnX1cPSMZE7zKBxKYOYNQDSaJnmu
+                      role_id: 4
+                      otp: "5937"
+                      status: ACTIVE
+                      createdAt: "2023-06-13T05:24:34.245Z"
+                      updatedAt: "2023-06-13T08:29:15.162Z"
+                      role:
+                        id: 4
+                        name: RETAILER
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    message: User tidak ditemukan!
+              examples:
+                Example 1:
+                  value:
+                    message: User tidak ditemukan!
+      operationId: get-admin-userShow
+      security:
+        - bearerAuth: []
+      description: "Get user by id : admin role"
+    parameters:
+      - schema:
+          type: string
+        name: user_id
+        in: path
+        required: true
+        description: User id
+  "/admin/userUpdate/{user_id}":
+    put:
+      summary: Update User
+      operationId: put-admin-userUpdate
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: integer
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success update user
+                    data:
+                      - 1
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success update user
+                    data:
+                      - 1
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    message: Email/nomer telepon sudah terdaftar
+              examples:
+                Example 1:
+                  value:
+                    message: Email/nomer telepon sudah terdaftar
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    message: User tidak ada!
+              examples:
+                Example 1:
+                  value:
+                    message: User tidak ada!
+      security:
+        - bearerAuth: []
+      description: Update data user by admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                location:
+                  type: string
+                address:
+                  type: string
+                phone_number:
+                  type: string
+                role_id:
+                  type: integer
+              x-examples:
+                Example 1:
+                  first_name: Kevin
+                  last_name: Abiel
+                  email: rarjen57@gmail.com
+                  location: Semarang
+                  address: "Semarang, Indonesia"
+                  phone_number: "085329447627"
+                  role_id: 4
+            examples:
+              Example 1:
+                value:
+                  first_name: Kevin
+                  last_name: Abiel
+                  email: rarjen57@gmail.com
+                  location: Semarang
+                  address: "Semarang, Indonesia"
+                  phone_number: "085329447627"
+                  role_id: 4
+    parameters:
+      - schema:
+          type: string
+        name: user_id
+        in: path
+        required: true
+        description: User id
+  /user/updateProfile:
+    put:
+      summary: Update User Profiles
+      operationId: put-user-userProfile
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: integer
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success update user
+                    data:
+                      - 1
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success update data!
+                    data:
+                      - 1
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    message: Email/nomer telepon sudah terdaftar
+              examples:
+                Example 1:
+                  value:
+                    message: Email/nomer telepon sudah terdaftar
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    message: User tidak ada!
+              examples:
+                Example 1:
+                  value:
+                    message: User tidak ada!
+      security:
+        - bearerAuth: []
+      description: Update user profiles by User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                location:
+                  type: string
+                address:
+                  type: string
+                phone_number:
+                  type: string
+              x-examples:
+                Example 1:
+                  first_name: Otniel
+                  last_name: Kevin
+                  email: rarjen57@gmail.com
+                  location: Surabaya
+                  address: "Surabaya, Indonesia"
+                  phone_number: "085329447627"
+            examples:
+              Example 1:
+                value:
+                  first_name: Otniel
+                  last_name: Kevin
+                  email: rarjen57@gmail.com
+                  location: Surabaya
+                  address: "Surabaya, Indonesia"
+                  phone_number: "085329447627"
+      tags:
+        - User Profile
+    parameters: []
+  /role:
+    get:
+      summary: Get All Roles
+      tags:
+        - Role
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        createdAt:
+                          type: string
+                        updatedAt:
+                          type: string
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success get roles!
+                    data:
+                      - id: 1
+                        name: ADMIN
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+                      - id: 2
+                        name: PETANI
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+                      - id: 3
+                        name: PENGEPUL
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+                      - id: 4
+                        name: RETAILER
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+                      - id: 5
+                        name: BUYER
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success get roles!
+                    data:
+                      - id: 1
+                        name: ADMIN
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+                      - id: 2
+                        name: PETANI
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+                      - id: 3
+                        name: PENGEPUL
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+                      - id: 4
+                        name: RETAILER
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+                      - id: 5
+                        name: BUYER
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+      operationId: get-role
+      description: Get all role
+  "/role/{role_id}":
+    get:
+      summary: Get Role
+      tags:
+        - Role
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        createdAt:
+                          type: string
+                        updatedAt:
+                          type: string
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success get roles!
+                    data:
+                      - id: 1
+                        name: ADMIN
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+                      - id: 2
+                        name: PETANI
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+                      - id: 3
+                        name: PENGEPUL
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+                      - id: 4
+                        name: RETAILER
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+                      - id: 5
+                        name: BUYER
+                        createdAt: "2023-06-13T01:38:22.810Z"
+                        updatedAt: "2023-06-13T01:38:22.810Z"
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success get roles!
+                    data:
+                      id: 1
+                      name: ADMIN
+                      createdAt: "2023-06-13T01:38:22.810Z"
+                      updatedAt: "2023-06-13T01:38:22.810Z"
+      operationId: get-role-id
+      description: Get role by id
+    parameters:
+      - schema:
+          type: string
+        name: role_id
+        in: path
+        required: true
+        description: Role id
+  /admin/registerPatner:
+    post:
+      summary: Register Petani
+      operationId: post-admin-registerPatner
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      wallet_address:
+                        type: string
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      email:
+                        type: string
+                      location:
+                        type: string
+                      address:
+                        type: string
+                      phone_number:
+                        type: string
+                      password:
+                        type: string
+                      role_id:
+                        type: integer
+                      status:
+                        type: string
+                      updatedAt:
+                        type: string
+                      createdAt:
+                        type: string
+                      otp:
+                        type: "null"
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success create patner
+                    data:
+                      id: 9
+                      wallet_address: "-"
+                      first_name: Otniel
+                      last_name: Abiel
+                      email: 111202013015@mhs.dinus.ac.id
+                      location: Semarang
+                      address: "Semarang, Indonesia"
+                      phone_number: "085329447629"
+                      password: $2b$10$FQ7vZz9AccqCI548frKvpOcWWyl27ojwODj/98xV7gTcacde51Dx6
+                      role_id: 2
+                      status: ACTIVE
+                      updatedAt: "2023-06-13T10:18:38.652Z"
+                      createdAt: "2023-06-13T10:18:38.652Z"
+                      otp: null
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success create patner
+                    data:
+                      id: 9
+                      wallet_address: "-"
+                      first_name: Otniel
+                      last_name: Abiel
+                      email: 111202013015@mhs.dinus.ac.id
+                      location: Semarang
+                      address: "Semarang, Indonesia"
+                      phone_number: "085329447629"
+                      password: $2b$10$FQ7vZz9AccqCI548frKvpOcWWyl27ojwODj/98xV7gTcacde51Dx6
+                      role_id: 2
+                      status: ACTIVE
+                      updatedAt: "2023-06-13T10:18:38.652Z"
+                      createdAt: "2023-06-13T10:18:38.652Z"
+                      otp: null
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    message: Email/Nomer telepon sudah terdaftar!
+              examples:
+                Example 1:
+                  value:
+                    message: Email/Nomer telepon sudah terdaftar!
+      tags:
+        - Admin
+      description: Create patner (petani) by admin
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      description: ""
+      x-examples:
+        Alice Smith:
+          id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: "1997-10-31"
+          emailVerified: true
+          signUpDate: "2019-08-24"
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        dateOfBirth:
+          type: string
+          format: date
+          example: "1997-10-31"
+        emailVerified:
+          type: boolean
+          description: Set to true if the user's email has been verified.
+        createDate:
+          type: string
+          format: date
+          description: The date that the user was created.
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+        - emailVerified
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
