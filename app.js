@@ -4,6 +4,10 @@ const morgan = require("morgan");
 const router = require("./routes");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocument = YAML.load("./swagger.yaml");
+
 const { PORT } = process.env;
 
 const app = express();
@@ -16,6 +20,7 @@ app.use(morgan("dev"));
 app.use(express.json()); // read body type json
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(router);
 
