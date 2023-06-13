@@ -5,11 +5,20 @@ const jwt = require("jsonwebtoken");
 const { JWT_SECRET_KEY } = process.env;
 const bcrypt = require("bcrypt");
 const Validator = require("fastest-validator");
-const { ROLES } = require("../../utils/enum");
+const { ROLES, EMAIL_STATUS } = require("../../utils/enum");
 const v = new Validator();
 const { Op } = require("sequelize");
 const sendEmail = require("../../utils/mailer/sendEmail");
 const templateHtml = require("../../utils/mailer/templateHtml");
+
+function generateOTP(len) {
+  var digits = "0123456789";
+  let OTP = "";
+  for (let i = 0; i < len; i++) {
+    OTP += digits[Math.floor(Math.random() * 10)];
+  }
+  return OTP;
+}
 
 const sendingEmail = async (user) => {
   const payload = {
@@ -17,12 +26,22 @@ const sendingEmail = async (user) => {
     email: user.email,
   };
   const token = jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: "900s" });
-  const link = `localhost:3000/auth/resetpassword?token=${token}`;
+  const link = `http://localhost:3000/auth/reset-password?token=${token}`;
   const htmlEmail = await templateHtml("forgot-password.ejs", {
     email: user.email,
     link: link,
   });
   await sendEmail(user.email, "Reset Password", htmlEmail);
+};
+
+const sendOTP = async (otp, first_name, last_name, email) => {
+  const htmlEmail = await templateHtml("otp.ejs", {
+    email: email,
+    first_name: first_name,
+    last_name: last_name,
+    otp: otp,
+  });
+  await sendEmail(email, "OTP", htmlEmail);
 };
 
 const registerBuyer = async (req, res, next) => {
@@ -91,11 +110,15 @@ const registerBuyer = async (req, res, next) => {
     if (!checkRole) {
       throw new NotFoundError("Role tidak ada!");
     }
-    if (checkRole.name !== ROLES.RETAILER && checkRole.name !== ROLES.BUYER) {
-      throw new BadRequestError("Hanya Retailer & Buyer diperbolehkan!");
+    if (
+      checkRole.name !== ROLES.PENGEPUL &&
+      checkRole.name !== ROLES.RETAILER
+    ) {
+      throw new BadRequestError("Hanya PENGEPUL & RETAILER diperbolehkan!");
     }
 
     const passwordHashed = await bcrypt.hash(password, 10);
+    const createOTP = generateOTP(4);
 
     const result = await User.create({
       wallet_address,
@@ -105,7 +128,21 @@ const registerBuyer = async (req, res, next) => {
       phone_number,
       password: passwordHashed,
       role_id,
+      otp: createOTP,
+      status: EMAIL_STATUS.INACTIVE,
     });
+
+    const payload = {
+      phone_number: result.hone_number,
+      email: result.email,
+      otp: result.otp,
+      role_id: result.role_id,
+      status: result.status,
+    };
+
+    const token = jwt.sign(payload, JWT_SECRET_KEY);
+
+    sendOTP(createOTP, result.first_name, result.last_name, result.email);
 
     return res.status(StatusCodes.CREATED).json({
       status: true,
@@ -115,6 +152,7 @@ const registerBuyer = async (req, res, next) => {
         last_name: result.last_name,
         email: result.email,
         role_id: result.role_id,
+        token: token,
       },
     });
   } catch (error) {
@@ -124,21 +162,48 @@ const registerBuyer = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email, phone_number, password } = req.body;
 
-    const schema = {
-      email: { type: "email", label: "Email Address" },
-    };
-    const check = await v.compile(schema);
+    let where = {};
 
-    const validate = check({ email: `${email}` });
+    if (email) {
+      const schema = {
+        email: { type: "email" },
+      };
+      const check = await v.compile(schema);
 
-    if (validate.length > 0) {
-      throw new BadRequestError("Email tidak valid");
+      const validate = check({ email: `${email}` });
+
+      if (validate.length > 0) {
+        throw new BadRequestError("Email tidak valid!");
+      }
+      where = {
+        email,
+      };
+    } else {
+      const phoneSchema = {
+        phone_number: {
+          type: "string",
+          pattern: /^0\d{9,12}$/,
+          max: 13,
+        },
+      };
+
+      const checkPhone = await v.compile(phoneSchema);
+
+      const validatePhone = checkPhone({
+        phone_number: `${phone_number}`,
+      });
+      if (validatePhone.length > 0) {
+        throw new BadRequestError("Format nomor telepon salah!");
+      }
+      where = {
+        phone_number,
+      };
     }
 
     const user = await User.findOne({
-      where: { email },
+      where,
       include: [
         {
           model: Role,
@@ -148,17 +213,18 @@ const login = async (req, res, next) => {
     });
 
     if (!user) {
-      throw new NotFoundError("Email atau password salah");
+      throw new NotFoundError("Invalid credentials!");
     }
 
     const match = await bcrypt.compare(password, user.password);
 
     if (!match) {
-      throw new BadRequestError("Email atau password salah");
+      throw new BadRequestError("Invalid credentials!");
     }
 
     const payload = {
       id: user.id,
+      phone_number: user.phone_number,
       email: user.email,
       role: user.role.name,
     };
@@ -201,24 +267,23 @@ const forgotPassword = async (req, res, next) => {
     const validate = check({ email: `${email}` });
 
     if (validate.length > 0) {
-      return res.status(400).json({
+      return res.status(StatusCodes.BAD_REQUEST).json({
         status: false,
         message: "Email tidak valid!",
-        data: null,
       });
     }
 
     const findUser = await User.findOne({ where: { email } });
 
     if (!findUser) {
-      return res.status(400).json({
+      return res.status(StatusCodes.BAD_REQUEST).json({
         status: false,
-        message: "Email tidak fitemukan!",
+        message: "Email tidak ditemukan!",
       });
     }
 
     sendingEmail(findUser);
-    return res.status(200).json({
+    return res.status(StatusCodes.OK).json({
       status: true,
       message: "Harap cek email untuk reset password!",
       data: findUser.email,
@@ -243,7 +308,7 @@ const resetPassword = async (req, res, next) => {
     });
 
     if (validate.length > 0) {
-      return res.status(400).json({
+      return res.status(StatusCodes.BAD_REQUEST).json({
         status: false,
         message: "Password at least 6 characters!",
         data: null,
@@ -253,7 +318,7 @@ const resetPassword = async (req, res, next) => {
     const validUser = jwt.verify(token, JWT_SECRET_KEY);
 
     if (!validUser) {
-      return res.status(401).json({
+      return res.status(StatusCodes.UNAUTHORIZED).json({
         status: false,
         message: "Invalid token!",
       });
@@ -275,7 +340,7 @@ const resetPassword = async (req, res, next) => {
       { where: { id: findUser.id } }
     );
 
-    return res.status(200).json({
+    return res.status(StatusCodes.OK).json({
       status: true,
       message: "success change password",
       data: {
@@ -305,7 +370,7 @@ const changePassword = async (req, res, next) => {
     });
 
     if (validate.length > 0) {
-      return res.status(400).json({
+      return res.status(StatusCodes.OK).json({
         status: false,
         message: "Password minimal 6 karakter!",
         data: null,
@@ -315,7 +380,7 @@ const changePassword = async (req, res, next) => {
     const existUser = await User.findOne({ where: { id: user.id } });
 
     if (newPassword != confirmNewPassword) {
-      return res.status(400).json({
+      return res.status(StatusCodes.BAD_REQUEST).json({
         status: false,
         message: "Password Doesn't Match",
         data: null,
@@ -323,7 +388,7 @@ const changePassword = async (req, res, next) => {
     }
     const correct = await bcrypt.compare(oldPassword, existUser.password);
     if (!correct) {
-      return res.status(400).json({
+      return res.status(StatusCodes.BAD_REQUEST).json({
         status: false,
         message: "Old Password Doesn't Match!",
         data: null,
@@ -336,17 +401,63 @@ const changePassword = async (req, res, next) => {
       { where: { id: user.id } }
     );
     if (!passwordUpdated) {
-      return res.status(400).json({
+      return res.status(StatusCodes.BAD_REQUEST).json({
         status: false,
         message: "Something Went Wrong",
         data: null,
       });
     }
 
-    return res.status(200).json({
+    return res.status(StatusCodes.OK).json({
       status: true,
       message: "Password Updated!",
       data: passwordUpdated,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const activateAccount = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const { otp } = req.body;
+
+    const checkUser = await User.findOne({ where: { email: user.email } });
+
+    if (otp !== checkUser.otp) {
+      throw new BadRequestError("OTP salah!");
+    }
+
+    await User.update(
+      {
+        status: EMAIL_STATUS.ACTIVE,
+      },
+      { where: { email: user.email } }
+    );
+
+    const getNewUser = await User.findOne({
+      where: { email: user.email },
+      include: [{ model: Role, as: "role" }],
+    });
+    if (getNewUser.status === EMAIL_STATUS.INACTIVE) {
+      throw new BadRequestError("Email belum aktif!");
+    }
+
+    const payload = {
+      id: getNewUser.id,
+      phone_number: getNewUser.phone_number,
+      email: getNewUser.email,
+      role: getNewUser.role.name,
+    };
+
+    const token = jwt.sign(payload, JWT_SECRET_KEY);
+    return res.status(StatusCodes.OK).json({
+      status: true,
+      message: "Success!",
+      data: {
+        token: token,
+      },
     });
   } catch (err) {
     next(err);
@@ -360,4 +471,5 @@ module.exports = {
   resetPassword,
   changePassword,
   forgotPassword,
+  activateAccount,
 };
