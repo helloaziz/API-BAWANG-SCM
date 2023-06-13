@@ -182,6 +182,7 @@ const show = async (req, res, next) => {
     next(error);
   }
 };
+
 const showBuyerRetail = async (req, res, next) => {
   try {
     const { product_id } = req.params;
