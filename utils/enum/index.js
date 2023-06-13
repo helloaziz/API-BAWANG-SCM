@@ -16,4 +16,9 @@ const PRODUCT_STATUS = {
   INACTIVE: "INACTIVE",
 };
 
-module.exports = { ROLES, DELETED, PRODUCT_STATUS };
+const EMAIL_STATUS = {
+  ACTIVE: "ACTIVE",
+  INACTIVE: "INACTIVE",
+};
+
+module.exports = { ROLES, DELETED, PRODUCT_STATUS, EMAIL_STATUS };
