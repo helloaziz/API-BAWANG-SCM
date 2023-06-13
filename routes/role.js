@@ -5,7 +5,7 @@ const { ROLES } = require("../utils/enum");
 
 router.post("/create", authorize(ROLES.ADMIN), role.create);
 router.post("/edit/:role_id", authorize(ROLES.ADMIN), role.edit);
-router.post("/", role.index);
-router.post("/:role_id", role.show);
+router.get("/", role.index);
+router.get("/:role_id", role.show);
 
 module.exports = router;
