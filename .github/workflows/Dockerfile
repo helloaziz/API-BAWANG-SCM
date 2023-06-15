@@ -1,5 +1,5 @@
 # Menggunakan gambar Node.js sebagai dasar
-FROM node:14
+FROM node:16
 
 # Mengatur direktori kerja dalam container
 WORKDIR /app
