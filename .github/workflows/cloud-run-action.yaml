@@ -41,44 +41,21 @@ jobs:
             --platform managed \
             --region asia-southeast2 \
             --allow-unauthenticated \
-            --project crucial-quarter-369308
+            --project crucial-quarter-369308 \
             --port 8080 \
             --update-env-vars PORT=8080 \
             --timeout 300s \
             --no-traffic
 
+---
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: api-service
 spec:
   template:
-    metadata:
-      annotations:
-        autoscaling.knative.dev/minScale: "1"
-        autoscaling.knative.dev/maxScale: "100"
     spec:
       containers:
         - image: gcr.io/crucial-quarter-369308/swagger-api-image:${{ github.sha }}
           ports:
             - containerPort: 3000
-          env:
-            - name: PORT
-              value: "3000"
-          readinessProbe:
-            httpGet:
-              path: /healthz
-              port: 3000
-            initialDelaySeconds: 3
-            periodSeconds: 5
-            timeoutSeconds: 1
-            failureThreshold: 3
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 3000
-            initialDelaySeconds: 3
-            periodSeconds: 10
-            timeoutSeconds: 1
-            failureThreshold: 3
-#testing
