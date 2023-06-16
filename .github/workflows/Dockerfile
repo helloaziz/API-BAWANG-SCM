@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Menjalankan perintah untuk mengenerate file Swagger JSON
-RUN npm run swagger:generate
+# RUN npm run swagger:generate
 
 # Menentukan port yang akan digunakan oleh aplikasi
 ENV PORT=3000
