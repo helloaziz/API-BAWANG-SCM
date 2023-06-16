@@ -13,12 +13,11 @@ RUN npm install
 # Menyalin kode aplikasi ke dalam container
 COPY . .
 
-# Menjalankan perintah untuk mengenerate file Swagger JSON
-# RUN npm run swagger:generate
-
 # Menentukan port yang akan digunakan oleh aplikasi
 ENV PORT=3000
-EXPOSE $PORT
 
 # Menjalankan perintah untuk memulai aplikasi ketika container dimulai
 CMD ["npm", "start"]
+
+# Mengekspos port yang diatur dalam ENV PORT
+EXPOSE $PORT

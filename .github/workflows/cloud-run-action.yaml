@@ -42,5 +42,9 @@ jobs:
             --region asia-southeast2 \
             --allow-unauthenticated \
             --project crucial-quarter-369308
+            --port 8080 \
+            --update-env-vars PORT=8080 \
+            --timeout 300s \
+            --no-traffic
 
 #testing
