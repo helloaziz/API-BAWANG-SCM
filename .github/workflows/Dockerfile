@@ -6,7 +6,7 @@ FROM node:14
 
 # Set environment variables
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV PORT=9000
 
 # Create app directory
 WORKDIR /usr/src/app
