@@ -43,6 +43,8 @@ jobs:
             --allow-unauthenticated \
             --project crucial-quarter-369308 \
             --port 8080 \
-            --update-env-vars PORT=8080 \
+            --update-env-vars APP_PORT=8080 \
             --timeout 300s \
             --no-traffic
+
+# mantap
