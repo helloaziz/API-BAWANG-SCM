@@ -1,23 +1,27 @@
-# Menggunakan gambar Node.js sebagai dasar
+# Dockerfile for running a swagger API in GitHub Actions
+
+
+# Base image
 FROM node:14
 
-# Mengatur direktori kerja dalam container
-WORKDIR /app
-
-# Menyalin file package.json dan package-lock.json ke dalam container
-COPY package*.json ./
-
-# Menginstal dependensi
-RUN npm install
-
-# Menyalin kode aplikasi ke dalam container
-COPY . .
-
-# Menentukan port yang akan digunakan oleh aplikasi
+# Set environment variables
+ENV NODE_ENV=production
 ENV PORT=3000
 
-# Menjalankan perintah untuk memulai aplikasi ketika container dimulai
-CMD ["npm", "start"]
+# Create app directory
+WORKDIR /usr/src/app
 
-# Mengekspos port yang diatur dalam ENV PORT
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Expose port
 EXPOSE $PORT
+
+# Run the app
+CMD [ "npm", "start" ]
