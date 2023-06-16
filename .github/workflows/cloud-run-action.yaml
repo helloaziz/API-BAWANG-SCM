@@ -59,7 +59,7 @@ spec:
         autoscaling.knative.dev/maxScale: "100"
     spec:
       containers:
-        - image: gcr.io/your-project-id/your-image:latest
+        - image: gcr.io/crucial-quarter-369308/swagger-api-image:${{ github.sha }}
           ports:
             - containerPort: 3000
           env:
