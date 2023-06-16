@@ -36,8 +36,9 @@ jobs:
 
       - name: Deploy to Google Cloud Run
         run: |
-          gcloud run deploy api-service \
+          gcloud run deploy API \
             --image gcr.io/crucial-quarter-369308/swagger-api-image:${{ github.sha }} \
             --platform managed \
             --region asia-southeast2-a \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --project crucial-quarter-369308
