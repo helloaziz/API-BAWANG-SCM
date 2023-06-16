@@ -1,4 +1,4 @@
-name: API Bawang SCM
+name: API-Bawang-SCM
 
 on:
   push:
@@ -39,6 +39,8 @@ jobs:
           gcloud run deploy api-service \
             --image gcr.io/crucial-quarter-369308/swagger-api-image:${{ github.sha }} \
             --platform managed \
-            --region asia-southeast2-a \
+            --region asia-southeast2 \
             --allow-unauthenticated \
             --project crucial-quarter-369308
+
+#testing
