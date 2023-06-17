@@ -1,6 +1,3 @@
-# Dockerfile for running a swagger API in GitHub Actions
-
-
 # Base image
 FROM node:14
 
@@ -19,9 +16,6 @@ RUN npm install
 
 # Copy source code
 COPY . .
-
-# Expose port
-EXPOSE $PORT
 
 # Run the app
 CMD [ "npm", "start" ]
