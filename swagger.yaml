@@ -1107,6 +1107,8 @@ paths:
                   address: "Semarang, Indonesia"
                   phone_number: "085329447627"
                   role_id: 4
+      tags:
+        - Admin
     parameters:
       - schema:
           type: string
@@ -1482,6 +1484,1037 @@ paths:
       tags:
         - Admin
       description: Create patner (petani) by admin
+  /product/create:
+    post:
+      summary: Create Product
+      operationId: post-product-create
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      user_id:
+                        type: integer
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      location:
+                        type: string
+                      weight:
+                        type: integer
+                      price:
+                        type: integer
+                      stock:
+                        type: integer
+                      status:
+                        type: string
+                      deleted:
+                        type: string
+                      updatedAt:
+                        type: string
+                      createdAt:
+                        type: string
+                      deletedAt:
+                        type: "null"
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success Create Product!
+                    data:
+                      id: 2
+                      user_id: 7
+                      name: Bawang Merah
+                      description: Bawang Merah serba guna
+                      location: Semarang
+                      weight: 2000
+                      price: 15000
+                      stock: 3
+                      status: ACTIVE
+                      deleted: "NO"
+                      updatedAt: "2023-07-16T14:11:56.509Z"
+                      createdAt: "2023-07-16T14:11:56.509Z"
+                      deletedAt: null
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success Create Product!
+                    data:
+                      id: 2
+                      user_id: 7
+                      name: Bawang Merah
+                      description: Bawang Merah serba guna
+                      location: Semarang
+                      weight: 2000
+                      price: 15000
+                      stock: 3
+                      status: ACTIVE
+                      deleted: "NO"
+                      updatedAt: "2023-07-16T14:11:56.509Z"
+                      createdAt: "2023-07-16T14:11:56.509Z"
+                      deletedAt: null
+      description: Endpoint Create Product for Pengepul & Petani
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                location:
+                  type: string
+                weight:
+                  type: integer
+                price:
+                  type: integer
+                stock:
+                  type: integer
+              x-examples:
+                Example 1:
+                  name: Bawang Merah
+                  description: Bawang Merah serba guna
+                  location: Semarang
+                  weight: 2000
+                  price: 15000
+                  stock: 3
+            examples:
+              Example 1:
+                value:
+                  name: Bawang Merah
+                  description: Bawang Merah serba guna
+                  location: Semarang
+                  weight: 2000
+                  price: 15000
+                  stock: 3
+      tags:
+        - Product
+  /product/my-products:
+    get:
+      summary: Get My Products
+      tags:
+        - Product
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        user_id:
+                          type: integer
+                        name:
+                          type: string
+                        description:
+                          type: string
+                        location:
+                          type: string
+                        weight:
+                          type: integer
+                        price:
+                          type: integer
+                        stock:
+                          type: integer
+                        status:
+                          type: string
+                        deleted:
+                          type: string
+                        deletedAt:
+                          type: "null"
+                        createdAt:
+                          type: string
+                        updatedAt:
+                          type: string
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success Get Product!
+                    data:
+                      - id: 1
+                        user_id: 7
+                        name: Bawang Putih
+                        description: Bawang Putih serba guna
+                        location: Semarang
+                        weight: 2000
+                        price: 15000
+                        stock: 3
+                        status: ACTIVE
+                        deleted: "NO"
+                        deletedAt: null
+                        createdAt: "2023-07-16T14:11:47.887Z"
+                        updatedAt: "2023-07-16T14:11:47.887Z"
+                      - id: 2
+                        user_id: 7
+                        name: Bawang Merah
+                        description: Bawang Merah serba guna
+                        location: Semarang
+                        weight: 2000
+                        price: 15000
+                        stock: 3
+                        status: ACTIVE
+                        deleted: "NO"
+                        deletedAt: null
+                        createdAt: "2023-07-16T14:11:56.509Z"
+                        updatedAt: "2023-07-16T14:11:56.509Z"
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success Get Product!
+                    data:
+                      - id: 1
+                        user_id: 7
+                        name: Bawang Putih
+                        description: Bawang Putih serba guna
+                        location: Semarang
+                        weight: 2000
+                        price: 15000
+                        stock: 3
+                        status: ACTIVE
+                        deleted: "NO"
+                        deletedAt: null
+                        createdAt: "2023-07-16T14:11:47.887Z"
+                        updatedAt: "2023-07-16T14:11:47.887Z"
+                      - id: 2
+                        user_id: 7
+                        name: Bawang Merah
+                        description: Bawang Merah serba guna
+                        location: Semarang
+                        weight: 2000
+                        price: 15000
+                        stock: 3
+                        status: ACTIVE
+                        deleted: "NO"
+                        deletedAt: null
+                        createdAt: "2023-07-16T14:11:56.509Z"
+                        updatedAt: "2023-07-16T14:11:56.509Z"
+      operationId: get-product-my-products
+      description: Endpoint get products (Petani & Pengepul)
+      security:
+        - bearerAuth: []
+  "/product/edit/{product_id}":
+    put:
+      summary: Edit Product
+      operationId: put-product
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: integer
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success Edit Product!
+                    data:
+                      - 1
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success Edit Product!
+                    data:
+                      - 1
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    message: Product tidak ada!
+              examples:
+                Example 1:
+                  value:
+                    message: Product tidak ada!
+      description: Endpoint edit product by Petani & Pengepul
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      tags:
+        - Product
+    parameters:
+      - schema:
+          type: string
+        name: product_id
+        in: path
+        required: true
+        description: Product id
+  /product:
+    get:
+      summary: Show All Active Products
+      tags:
+        - Product
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        user_id:
+                          type: integer
+                        name:
+                          type: string
+                        description:
+                          type: string
+                        location:
+                          type: string
+                        weight:
+                          type: integer
+                        price:
+                          type: integer
+                        stock:
+                          type: integer
+                        status:
+                          type: string
+                        deleted:
+                          type: string
+                        deletedAt:
+                          type: "null"
+                        createdAt:
+                          type: string
+                        updatedAt:
+                          type: string
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            wallet_address:
+                              type: string
+                            first_name:
+                              type: string
+                            last_name:
+                              type: string
+                            email:
+                              type: string
+                            location:
+                              type: string
+                            address:
+                              type: string
+                            phone_number:
+                              type: string
+                            password:
+                              type: string
+                            role_id:
+                              type: integer
+                            otp:
+                              type: string
+                            status:
+                              type: string
+                            createdAt:
+                              type: string
+                            updatedAt:
+                              type: string
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success Get All Products!
+                    data:
+                      - id: 1
+                        user_id: 7
+                        name: Bawang Putih
+                        description: Bawang Putih serba guna
+                        location: Semarang
+                        weight: 2000
+                        price: 15000
+                        stock: 3
+                        status: ACTIVE
+                        deleted: "NO"
+                        deletedAt: null
+                        createdAt: "2023-07-16T14:11:47.887Z"
+                        updatedAt: "2023-07-16T14:11:47.887Z"
+                        user:
+                          id: 7
+                          wallet_address: "-"
+                          first_name: Otniel
+                          last_name: Abiel
+                          email: rarjen57@gmail.com
+                          location: Semarang
+                          address: "Semarang, Indonesia"
+                          phone_number: "085329447620"
+                          password: $2b$10$n5sc25pZgG5Cl8NiJZlPteCMl/64ZgaEWyYiTa0m0P6O.0KocLmYK
+                          role_id: 2
+                          otp: "-"
+                          status: ACTIVE
+                          createdAt: "2023-07-16T13:54:47.675Z"
+                          updatedAt: "2023-07-16T13:54:47.675Z"
+                      - id: 2
+                        user_id: 7
+                        name: Bawang Merah
+                        description: Bawang Merah serba guna
+                        location: Semarang
+                        weight: 2000
+                        price: 15000
+                        stock: 3
+                        status: ACTIVE
+                        deleted: "NO"
+                        deletedAt: null
+                        createdAt: "2023-07-16T14:11:56.509Z"
+                        updatedAt: "2023-07-16T14:11:56.509Z"
+                        user:
+                          id: 7
+                          wallet_address: "-"
+                          first_name: Otniel
+                          last_name: Abiel
+                          email: rarjen57@gmail.com
+                          location: Semarang
+                          address: "Semarang, Indonesia"
+                          phone_number: "085329447620"
+                          password: $2b$10$n5sc25pZgG5Cl8NiJZlPteCMl/64ZgaEWyYiTa0m0P6O.0KocLmYK
+                          role_id: 2
+                          otp: "-"
+                          status: ACTIVE
+                          createdAt: "2023-07-16T13:54:47.675Z"
+                          updatedAt: "2023-07-16T13:54:47.675Z"
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success Get All Products!
+                    data:
+                      - id: 1
+                        user_id: 7
+                        name: Bawang Putih
+                        description: Bawang Putih serba guna
+                        location: Semarang
+                        weight: 2000
+                        price: 15000
+                        stock: 3
+                        status: ACTIVE
+                        deleted: "NO"
+                        deletedAt: null
+                        createdAt: "2023-07-16T14:11:47.887Z"
+                        updatedAt: "2023-07-16T14:11:47.887Z"
+                        user:
+                          id: 7
+                          wallet_address: "-"
+                          first_name: Otniel
+                          last_name: Abiel
+                          email: rarjen57@gmail.com
+                          location: Semarang
+                          address: "Semarang, Indonesia"
+                          phone_number: "085329447620"
+                          password: $2b$10$n5sc25pZgG5Cl8NiJZlPteCMl/64ZgaEWyYiTa0m0P6O.0KocLmYK
+                          role_id: 2
+                          otp: "-"
+                          status: ACTIVE
+                          createdAt: "2023-07-16T13:54:47.675Z"
+                          updatedAt: "2023-07-16T13:54:47.675Z"
+                      - id: 2
+                        user_id: 7
+                        name: Bawang Merah
+                        description: Bawang Merah serba guna
+                        location: Semarang
+                        weight: 2000
+                        price: 15000
+                        stock: 3
+                        status: ACTIVE
+                        deleted: "NO"
+                        deletedAt: null
+                        createdAt: "2023-07-16T14:11:56.509Z"
+                        updatedAt: "2023-07-16T14:11:56.509Z"
+                        user:
+                          id: 7
+                          wallet_address: "-"
+                          first_name: Otniel
+                          last_name: Abiel
+                          email: rarjen57@gmail.com
+                          location: Semarang
+                          address: "Semarang, Indonesia"
+                          phone_number: "085329447620"
+                          password: $2b$10$n5sc25pZgG5Cl8NiJZlPteCMl/64ZgaEWyYiTa0m0P6O.0KocLmYK
+                          role_id: 2
+                          otp: "-"
+                          status: ACTIVE
+                          createdAt: "2023-07-16T13:54:47.675Z"
+                          updatedAt: "2023-07-16T13:54:47.675Z"
+      operationId: get-product
+      description: "Show All Products (All Role, except: Admin)"
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: search
+          description: Search by keyword (name)
+    parameters: []
+  /product/all-products:
+    get:
+      summary: Get All Products by Admin
+      tags:
+        - Product
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            user_id:
+                              type: integer
+                            name:
+                              type: string
+                            description:
+                              type: string
+                            location:
+                              type: string
+                            weight:
+                              type: integer
+                            price:
+                              type: integer
+                            stock:
+                              type: integer
+                            status:
+                              type: string
+                            deleted:
+                              type: string
+                            deletedAt:
+                              type: "null"
+                            createdAt:
+                              type: string
+                            updatedAt:
+                              type: string
+                            user:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                wallet_address:
+                                  type: string
+                                first_name:
+                                  type: string
+                                last_name:
+                                  type: string
+                                email:
+                                  type: string
+                                location:
+                                  type: string
+                                address:
+                                  type: string
+                                phone_number:
+                                  type: string
+                                password:
+                                  type: string
+                                role_id:
+                                  type: integer
+                                otp:
+                                  type: string
+                                status:
+                                  type: string
+                                createdAt:
+                                  type: string
+                                updatedAt:
+                                  type: string
+                      pageNumber:
+                        type: integer
+                      limitPage:
+                        type: integer
+                      totalRows:
+                        type: integer
+                      totalPage:
+                        type: integer
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success Get All Products!
+                    data:
+                      data:
+                        - id: 1
+                          user_id: 7
+                          name: Bawang Putih
+                          description: Bawang Putih serba guna
+                          location: Semarang
+                          weight: 2000
+                          price: 15000
+                          stock: 3
+                          status: ACTIVE
+                          deleted: "NO"
+                          deletedAt: null
+                          createdAt: "2023-07-16T14:11:47.887Z"
+                          updatedAt: "2023-07-16T14:11:47.887Z"
+                          user:
+                            id: 7
+                            wallet_address: "-"
+                            first_name: Otniel
+                            last_name: Abiel
+                            email: rarjen57@gmail.com
+                            location: Semarang
+                            address: "Semarang, Indonesia"
+                            phone_number: "085329447620"
+                            password: $2b$10$n5sc25pZgG5Cl8NiJZlPteCMl/64ZgaEWyYiTa0m0P6O.0KocLmYK
+                            role_id: 2
+                            otp: "-"
+                            status: ACTIVE
+                            createdAt: "2023-07-16T13:54:47.675Z"
+                            updatedAt: "2023-07-16T13:54:47.675Z"
+                        - id: 2
+                          user_id: 7
+                          name: Bawang Merah
+                          description: Bawang Merah serba guna
+                          location: Semarang
+                          weight: 2000
+                          price: 15000
+                          stock: 3
+                          status: ACTIVE
+                          deleted: "NO"
+                          deletedAt: null
+                          createdAt: "2023-07-16T14:11:56.509Z"
+                          updatedAt: "2023-07-16T14:11:56.509Z"
+                          user:
+                            id: 7
+                            wallet_address: "-"
+                            first_name: Otniel
+                            last_name: Abiel
+                            email: rarjen57@gmail.com
+                            location: Semarang
+                            address: "Semarang, Indonesia"
+                            phone_number: "085329447620"
+                            password: $2b$10$n5sc25pZgG5Cl8NiJZlPteCMl/64ZgaEWyYiTa0m0P6O.0KocLmYK
+                            role_id: 2
+                            otp: "-"
+                            status: ACTIVE
+                            createdAt: "2023-07-16T13:54:47.675Z"
+                            updatedAt: "2023-07-16T13:54:47.675Z"
+                      pageNumber: 1
+                      limitPage: 10
+                      totalRows: 3
+                      totalPage: 1
+      operationId: get-product-all-products
+      description: Endpoint get all product by admin
+      security:
+        - bearerAuth: []
+  "/product/{product_id}":
+    get:
+      summary: Show Product by Id
+      tags:
+        - Product
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      user_id:
+                        type: integer
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      location:
+                        type: string
+                      weight:
+                        type: integer
+                      price:
+                        type: integer
+                      stock:
+                        type: integer
+                      status:
+                        type: string
+                      deleted:
+                        type: string
+                      deletedAt:
+                        type: "null"
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          wallet_address:
+                            type: string
+                          first_name:
+                            type: string
+                          last_name:
+                            type: string
+                          email:
+                            type: string
+                          location:
+                            type: string
+                          address:
+                            type: string
+                          phone_number:
+                            type: string
+                          password:
+                            type: string
+                          role_id:
+                            type: integer
+                          otp:
+                            type: string
+                          status:
+                            type: string
+                          createdAt:
+                            type: string
+                          updatedAt:
+                            type: string
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success Get Product!
+                    data:
+                      id: 1
+                      user_id: 7
+                      name: Bawang Putih
+                      description: Bawang Putih serba guna
+                      location: Semarang
+                      weight: 2000
+                      price: 15000
+                      stock: 3
+                      status: ACTIVE
+                      deleted: "NO"
+                      deletedAt: null
+                      createdAt: "2023-07-16T14:11:47.887Z"
+                      updatedAt: "2023-07-16T14:11:47.887Z"
+                      user:
+                        id: 7
+                        wallet_address: "-"
+                        first_name: Otniel
+                        last_name: Abiel
+                        email: rarjen57@gmail.com
+                        location: Semarang
+                        address: "Semarang, Indonesia"
+                        phone_number: "085329447620"
+                        password: $2b$10$n5sc25pZgG5Cl8NiJZlPteCMl/64ZgaEWyYiTa0m0P6O.0KocLmYK
+                        role_id: 2
+                        otp: "-"
+                        status: ACTIVE
+                        createdAt: "2023-07-16T13:54:47.675Z"
+                        updatedAt: "2023-07-16T13:54:47.675Z"
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success Get Product!
+                    data:
+                      id: 1
+                      user_id: 7
+                      name: Bawang Putih
+                      description: Bawang Putih serba guna
+                      location: Semarang
+                      weight: 2000
+                      price: 15000
+                      stock: 3
+                      status: ACTIVE
+                      deleted: "NO"
+                      deletedAt: null
+                      createdAt: "2023-07-16T14:11:47.887Z"
+                      updatedAt: "2023-07-16T14:11:47.887Z"
+                      user:
+                        id: 7
+                        wallet_address: "-"
+                        first_name: Otniel
+                        last_name: Abiel
+                        email: rarjen57@gmail.com
+                        location: Semarang
+                        address: "Semarang, Indonesia"
+                        phone_number: "085329447620"
+                        password: $2b$10$n5sc25pZgG5Cl8NiJZlPteCMl/64ZgaEWyYiTa0m0P6O.0KocLmYK
+                        role_id: 2
+                        otp: "-"
+                        status: ACTIVE
+                        createdAt: "2023-07-16T13:54:47.675Z"
+                        updatedAt: "2023-07-16T13:54:47.675Z"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    message: Product tidak ada!
+              examples:
+                Example 1:
+                  value:
+                    message: Product tidak ada!
+      operationId: get-product
+      description: "Get Product Id (all role, except: Admin)"
+    parameters:
+      - schema:
+          type: string
+        name: product_id
+        in: path
+        required: true
+        description: Product Id
+  "/product/all-products/{product_id}":
+    get:
+      summary: Your GET endpoint
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      user_id:
+                        type: integer
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      location:
+                        type: string
+                      weight:
+                        type: integer
+                      price:
+                        type: integer
+                      stock:
+                        type: integer
+                      status:
+                        type: string
+                      deleted:
+                        type: string
+                      deletedAt:
+                        type: "null"
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          wallet_address:
+                            type: string
+                          first_name:
+                            type: string
+                          last_name:
+                            type: string
+                          email:
+                            type: string
+                          location:
+                            type: string
+                          address:
+                            type: string
+                          phone_number:
+                            type: string
+                          password:
+                            type: string
+                          role_id:
+                            type: integer
+                          otp:
+                            type: string
+                          status:
+                            type: string
+                          createdAt:
+                            type: string
+                          updatedAt:
+                            type: string
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Success Get Product!
+                    data:
+                      id: 1
+                      user_id: 7
+                      name: Bawang Putih
+                      description: Bawang Putih serba guna
+                      location: Semarang
+                      weight: 2000
+                      price: 15000
+                      stock: 3
+                      status: ACTIVE
+                      deleted: "NO"
+                      deletedAt: null
+                      createdAt: "2023-07-16T14:11:47.887Z"
+                      updatedAt: "2023-07-16T14:11:47.887Z"
+                      user:
+                        id: 7
+                        wallet_address: "-"
+                        first_name: Otniel
+                        last_name: Abiel
+                        email: rarjen57@gmail.com
+                        location: Semarang
+                        address: "Semarang, Indonesia"
+                        phone_number: "085329447620"
+                        password: $2b$10$n5sc25pZgG5Cl8NiJZlPteCMl/64ZgaEWyYiTa0m0P6O.0KocLmYK
+                        role_id: 2
+                        otp: "-"
+                        status: ACTIVE
+                        createdAt: "2023-07-16T13:54:47.675Z"
+                        updatedAt: "2023-07-16T13:54:47.675Z"
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Success Get Product!
+                    data:
+                      id: 1
+                      user_id: 7
+                      name: Bawang Putih
+                      description: Bawang Putih serba guna
+                      location: Semarang
+                      weight: 2000
+                      price: 15000
+                      stock: 3
+                      status: ACTIVE
+                      deleted: "NO"
+                      deletedAt: null
+                      createdAt: "2023-07-16T14:11:47.887Z"
+                      updatedAt: "2023-07-16T14:11:47.887Z"
+                      user:
+                        id: 7
+                        wallet_address: "-"
+                        first_name: Otniel
+                        last_name: Abiel
+                        email: rarjen57@gmail.com
+                        location: Semarang
+                        address: "Semarang, Indonesia"
+                        phone_number: "085329447620"
+                        password: $2b$10$n5sc25pZgG5Cl8NiJZlPteCMl/64ZgaEWyYiTa0m0P6O.0KocLmYK
+                        role_id: 2
+                        otp: "-"
+                        status: ACTIVE
+                        createdAt: "2023-07-16T13:54:47.675Z"
+                        updatedAt: "2023-07-16T13:54:47.675Z"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    message: You're not authorized
+              examples:
+                Example 1:
+                  value:
+                    message: You're not authorized
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    message: Product tidak ada!
+              examples:
+                Example 1:
+                  value:
+                    message: Product tidak ada!
+      operationId: get-product-all-products
+      tags:
+        - Product
+      description: Get Product By Id (Admin)
+      security:
+        - bearerAuth: []
+    parameters:
+      - schema:
+          type: string
+        name: product_id
+        in: path
+        required: true
+        description: Product Id
 components:
   schemas:
     User:

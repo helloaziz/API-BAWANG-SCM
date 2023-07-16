@@ -34,6 +34,7 @@ const create = async (req, res, next) => {
 
 const edit = async (req, res, next) => {
   try {
+    const user = req.user;
     const { product_id } = req.params;
     const { name, description, location, weight, price, stock } = req.body;
 
@@ -47,8 +48,9 @@ const edit = async (req, res, next) => {
       throw new NotFoundError(`Product tidak ada!`);
     }
 
-    const result = await Product.create(
+    const result = await Product.update(
       {
+        user_id: user.id,
         name,
         description,
         location,
