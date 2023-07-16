@@ -7,6 +7,7 @@ const { DELETED, PRODUCT_STATUS } = require("../../utils/enum");
 const create = async (req, res, next) => {
   try {
     const user = req.user;
+
     const { name, description, location, weight, price, stock } = req.body;
 
     const result = await Product.create({
@@ -14,11 +15,11 @@ const create = async (req, res, next) => {
       name,
       description,
       location,
-      weight: parseFloat(weight),
-      price: parseFloat(price),
-      stockInt: parseInt(stock),
-      deleted: DELETED.NO,
+      weight: weight,
+      price: price,
+      stock: stock,
       status: PRODUCT_STATUS.ACTIVE,
+      deleted: DELETED.NO,
     });
 
     return res.status(StatusCodes.CREATED).json({
@@ -183,6 +184,23 @@ const show = async (req, res, next) => {
   }
 };
 
+const myProduct = async (req, res, next) => {
+  try {
+    const user = req.user;
+    console.log(user.id);
+
+    const result = await Product.findAll({ where: { user_id: user.id } });
+
+    return res.status(StatusCodes.OK).json({
+      status: true,
+      message: "Success Get Product!",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const showBuyerRetail = async (req, res, next) => {
   try {
     const { product_id } = req.params;
@@ -294,4 +312,5 @@ module.exports = {
   destroy,
   status,
   show,
+  myProduct,
 };
