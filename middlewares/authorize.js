@@ -18,7 +18,7 @@ function authorize(roles = []) {
         const user = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
         if (roles.length > 0) {
-          const valid = roles.find((r) => r == user.role);
+          const valid = roles.find((r) => r === user.role);
 
           if (!valid) {
             throw new UnauthorizedError("You're not authorized");

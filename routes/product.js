@@ -4,9 +4,15 @@ const authorize = require("../middlewares/authorize");
 const { ROLES } = require("../utils/enum");
 
 router.post(
-  "/create-product",
+  "/create",
   authorize([ROLES.PETANI, ROLES.PENGEPUL]),
   product.create
+);
+
+router.get(
+  "/my-products",
+  authorize([ROLES.PETANI, ROLES.PENGEPUL]),
+  product.myProduct
 );
 
 router.put(
@@ -15,40 +21,11 @@ router.put(
   product.edit
 );
 
-router.get(
-  "/all-products",
-  authorize([ROLES.ADMIN, ROLES.PENGEPUL, ROLES.PETANI]),
-  product.index
-);
+router.get("/", product.indexBuyerRetail);
 
-router.get(
-  "/",
-  authorize([ROLES.BUYER, ROLES.RETAILER]),
-  product.indexBuyerRetail
-);
+router.get("/all-products", authorize(ROLES.ADMIN), product.index);
 
-router.get(
-  "/:product_id",
-  authorize([ROLES.BUYER, ROLES.RETAILER]),
-  product.showBuyerRetail
-);
-
-router.get(
-  "/show/:product_id",
-  authorize([ROLES.ADMIN, ROLES.PENGEPUL, ROLES.PETANI]),
-  product.show
-);
-
-router.put(
-  "/delete/:product_id",
-  authorize([ROLES.ADMIN, ROLES.PENGEPUL, ROLES.PETANI]),
-  product.destroy
-);
-
-router.put(
-  "/update-status/:product_id",
-  authorize([ROLES.ADMIN, ROLES.PENGEPUL, ROLES.PETANI]),
-  product.status
-);
+router.get("/:product_id", product.showBuyerRetail);
+router.get("/all-products/:product_id", authorize(ROLES.ADMIN), product.show);
 
 module.exports = router;

@@ -94,6 +94,7 @@ const registerPatner = async (req, res, next) => {
       phone_number,
       password: passwordHashed,
       role_id,
+      otp: "-",
       status: EMAIL_STATUS.ACTIVE,
     });
 
