@@ -12,11 +12,16 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "user_id",
         as: "user",
       });
+      Product.belongsTo(models.Lahan, {
+        foreignKey: "lahan_id",
+        as: "lahan",
+      });
     }
   }
   Product.init(
     {
       user_id: DataTypes.INTEGER,
+      lahan_id: DataTypes.INTEGER,
       name: DataTypes.STRING,
       description: DataTypes.TEXT,
       location: DataTypes.STRING,
