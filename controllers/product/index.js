@@ -1,6 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const { Product, User } = require("../../models");
-const { NotFoundError } = require("../../errors");
+const { NotFoundError, BadRequestError } = require("../../errors");
 const { Op } = require("sequelize");
 const { DELETED, PRODUCT_STATUS } = require("../../utils/enum");
 
@@ -265,44 +265,48 @@ const destroy = async (req, res, next) => {
   }
 };
 
-const status = async (req, res, next) => {
-  const { product_id } = req.params;
+const updateStatus = async (req, res, next) => {
+  try {
+    const { product_id } = req.params;
 
-  const checkProduct = await Product.findOne({
-    where: { id: product_id },
-  });
+    const checkProduct = await Product.findOne({
+      where: { id: product_id },
+    });
 
-  if (!checkProduct) {
-    throw new NotFoundError(`Product tidak ada!`);
-  }
+    if (!checkProduct) {
+      throw new NotFoundError(`Product tidak ada!`);
+    }
 
-  if (checkProduct.deleted === DELETED.YES) {
-    throw new NotFoundError(`Product tidak ada!`);
-  }
+    if (checkProduct.deleted === DELETED.YES) {
+      throw new BadRequestError("Product sudah tidak tersedia!");
+    }
 
-  if (checkProduct.status === PRODUCT_STATUS.INACTIVE) {
+    if (checkProduct.status === PRODUCT_STATUS.INACTIVE) {
+      const result = await Product.update(
+        { status: PRODUCT_STATUS.ACTIVE },
+        { where: { id: product_id } }
+      );
+
+      return res.status(StatusCodes.OK).json({
+        status: true,
+        message: "Product aktif!",
+        data: result,
+      });
+    }
+
     const result = await Product.update(
-      { status: PRODUCT_STATUS.ACTIVE },
+      { status: PRODUCT_STATUS.INACTIVE },
       { where: { id: product_id } }
     );
 
     return res.status(StatusCodes.OK).json({
       status: true,
-      message: "Product aktif!",
+      message: "Product nonaktif!",
       data: result,
     });
+  } catch (error) {
+    next(error);
   }
-
-  const result = await Product.update(
-    { status: PRODUCT_STATUS.INACTIVE },
-    { where: { id: product_id } }
-  );
-
-  return res.status(StatusCodes.OK).json({
-    status: true,
-    message: "Product nonaktif!",
-    data: result,
-  });
 };
 
 module.exports = {
@@ -312,7 +316,7 @@ module.exports = {
   indexBuyerRetail,
   showBuyerRetail,
   destroy,
-  status,
+  updateStatus,
   show,
   myProduct,
 };

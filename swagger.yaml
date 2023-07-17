@@ -2515,6 +2515,150 @@ paths:
         in: path
         required: true
         description: Product Id
+  "/product/delete/{product_id}":
+    put:
+      summary: Soft Delete Product
+      operationId: put-product-delete
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: integer
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Product berhasil dihapus!
+                    data:
+                      - 1
+              examples:
+                Example 1:
+                  value:
+                    status: true
+                    message: Product berhasil dihapus!
+                    data:
+                      - 1
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    message: Product tidak ada!
+              examples:
+                Example 1:
+                  value:
+                    message: Product tidak ada!
+      tags:
+        - Product
+      description: Endpoint soft delete by admin
+      security:
+        - bearerAuth: []
+    parameters:
+      - schema:
+          type: string
+        name: product_id
+        in: path
+        required: true
+        description: Product Id
+  "/product/update-status/{product_id}":
+    put:
+      summary: Update Status Product
+      operationId: put-product-update-status
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: integer
+                x-examples:
+                  Example 1:
+                    status: true
+                    message: Product nonaktif!
+                    data:
+                      - 1
+              examples:
+                "Example 1 : Product Nonaktif":
+                  value:
+                    status: true
+                    message: Product nonaktif!
+                    data:
+                      - 1
+                "Example 2 : Product Aktif":
+                  value:
+                    status: true
+                    message: Product aktif!
+                    data:
+                      - 1
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    message: Product sudah tidak tersedia!
+              examples:
+                Example 1:
+                  value:
+                    message: Product sudah tidak tersedia!
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    message: Product tidak ada!
+              examples:
+                Example 1:
+                  value:
+                    message: Product tidak ada!
+      tags:
+        - Product
+      description: Endpoint update status product
+      security:
+        - bearerAuth: []
+    parameters:
+      - schema:
+          type: string
+        name: product_id
+        in: path
+        required: true
+        description: Product Id
 components:
   schemas:
     User:

@@ -8,24 +8,25 @@ router.post(
   authorize([ROLES.PETANI, ROLES.PENGEPUL]),
   product.create
 );
-
 router.get(
   "/my-products",
   authorize([ROLES.PETANI, ROLES.PENGEPUL]),
   product.myProduct
 );
-
 router.put(
   "/edit/:product_id",
   authorize([ROLES.PETANI, ROLES.PENGEPUL]),
   product.edit
 );
-
 router.get("/", product.indexBuyerRetail);
-
 router.get("/all-products", authorize(ROLES.ADMIN), product.index);
-
 router.get("/:product_id", product.showBuyerRetail);
 router.get("/all-products/:product_id", authorize(ROLES.ADMIN), product.show);
+router.put("/delete/:product_id", authorize(ROLES.ADMIN), product.destroy);
+router.put(
+  "/update-status/:product_id",
+  authorize([ROLES.PETANI, ROLES.PENGEPUL]),
+  product.updateStatus
+);
 
 module.exports = router;
