@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "user_id",
         as: "transaction",
       });
+      User.hasMany(models.Land, {
+        foreignKey: "user_id",
+        as: "land",
+      });
       User.belongsTo(models.Role, {
         foreignKey: "role_id",
         as: "role",
