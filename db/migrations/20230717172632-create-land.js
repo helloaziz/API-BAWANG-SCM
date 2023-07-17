@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Lahans', {
+    await queryInterface.createTable('Lands', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,19 +11,19 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER
       },
-      panjang: {
+      length: {
         type: Sequelize.DOUBLE
       },
-      lebar: {
+      width: {
         type: Sequelize.DOUBLE
       },
-      luas: {
+      area: {
         type: Sequelize.DOUBLE
       },
-      lng: {
+      longtitude: {
         type: Sequelize.DOUBLE
       },
-      lat: {
+      latitude: {
         type: Sequelize.DOUBLE
       },
       createdAt: {
@@ -37,6 +37,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Lahans');
+    await queryInterface.dropTable('Lands');
   }
 };

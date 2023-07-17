@@ -1,32 +1,32 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Lahan extends Model {
+  class Land extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Lahan.hasMany(models.Product, {
+      Land.hasMany(models.Product, {
         foreignKey: "lahan_id",
         as: "product",
       });
     }
   }
-  Lahan.init(
+  Land.init(
     {
       user_id: DataTypes.INTEGER,
-      panjang: DataTypes.DOUBLE,
-      lebar: DataTypes.DOUBLE,
-      luas: DataTypes.DOUBLE,
-      lng: DataTypes.DOUBLE,
-      lat: DataTypes.DOUBLE,
+      length: DataTypes.DOUBLE,
+      width: DataTypes.DOUBLE,
+      area: DataTypes.DOUBLE,
+      longtitude: DataTypes.DOUBLE,
+      latitude: DataTypes.DOUBLE,
     },
     {
       sequelize,
-      modelName: "Lahan",
+      modelName: "Land",
     }
   );
-  return Lahan;
+  return Land;
 };
