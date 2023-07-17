@@ -11,7 +11,7 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER,
       },
-      lahan_id: {
+      land_id: {
         type: Sequelize.INTEGER,
       },
       name: {
